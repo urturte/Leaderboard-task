@@ -23,7 +23,33 @@ module.exports.EDIT_SCOREBOARD_NAME = function (req, res) {
     });
   });
 };
+module.exports.EDIT_SCOREBOARD_DIR = async function (req, res) {
+  const direction = await ScoreboardSchema.findOne({
+    _id: req.params.id,
+  }).exec();
+  console.log(direction.scoreDirection);
 
+  function editDir(dir) {
+    switch (dir) {
+      case "Desc":
+        dir = "Asc";
+        break;
+      case "Asc":
+        dir = "Desc";
+    }
+    return dir;
+  }
+
+  ScoreboardSchema.updateOne(
+    { _id: req.params.id },
+    { scoreDirection: editDir(direction.scoreDirection) }
+  ).then((result) => {
+    return res.status(200).json({
+      statusMessage: "Direction edited successfully",
+      scoreDirection: result,
+    });
+  });
+};
 module.exports.GET_SCOREBOARDS = function (req, res) {
   ScoreboardSchema.find()
     .sort(" name")

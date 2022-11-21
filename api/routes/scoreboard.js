@@ -8,7 +8,10 @@ router.put(
   "/editScoreboardName/:id",
   scoreboardController.EDIT_SCOREBOARD_NAME
 );
-
+router.put(
+  "/editScoreboardDirection/:id",
+  scoreboardController.EDIT_SCOREBOARD_DIR
+);
 router.get("/getAllScoreboards", scoreboardController.GET_SCOREBOARDS);
 
 router.get(
